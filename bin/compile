@@ -167,6 +167,9 @@ INCLUDE_PATH="$VENDORED_NODE/include"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 
+#Custom Build Command
+echo "-----> Welcome Arunoda! You are awesome"
+
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
 run_npm "install --production"
