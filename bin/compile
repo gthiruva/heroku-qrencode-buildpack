@@ -179,12 +179,10 @@ export CPPPATH="$INCLUDE_PATH"
 #Custom Build Command
 echo "-----> Welcome Arunoda! You are awesome :)"
 tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" "tmpqr"
-ls tmpqr
-pwd
-sh ./tmpqr/configure
-make -C tmpqr
-make -C install
-cd..
+
+sh ./tmpqr/qrencode-3.4.1/configure
+make -C tmpqr/qrencode-3.4.1
+make -C tmpqr/qrencode-3.4.1 install
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
