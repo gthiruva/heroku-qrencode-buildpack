@@ -196,7 +196,7 @@ cd $1/qr/qrencode-3.4.1
 sh ./configure
 make
 cd $1
-$1/qr/qrencode-3.4.1/qrencode
+chmod -R 777 $1/qr/qrencode-3.4.1
 
 echo "-----> Building runtime environment"
 mkdir -p $BUILD_DIR/.profile.d
