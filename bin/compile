@@ -89,6 +89,15 @@ function package_resolve_version() {
   fi
 }
 
+function tar_download() {
+  url="$1"
+  location="$2"
+
+  mkdir -p $location
+  curl $url -s -o - | tar xzf - -C $location
+}
+
+
 function package_download() {
   engine="$1"
   version="$2"
@@ -169,6 +178,12 @@ export CPPPATH="$INCLUDE_PATH"
 
 #Custom Build Command
 echo "-----> Welcome Arunoda! You are awesome :)"
+tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" "tmpqr"
+cd tmpqr
+./configure
+make
+make install
+cd..
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
