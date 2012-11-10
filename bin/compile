@@ -185,8 +185,6 @@ sh ./configure
 make
 cd $BUILD_DIR
 $HOME/qr/qrencode-3.4.1/qrencode
-cp -rf $HOME/qr/qrencode-3.4.1/* $HOME/node_modules/.bin/
-$HOME/node_modules/.bin/qrencode
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
