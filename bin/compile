@@ -176,9 +176,6 @@ INCLUDE_PATH="$VENDORED_NODE/include"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 
-#Custom Build Command
-echo "-----> Welcome Arunoda! You are awesome :)"
-tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" $1/qr
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
@@ -186,11 +183,9 @@ run_npm "install --production"
 run_npm "rebuild"
 echo "Dependencies installed" | indent
 
-echo "======================"
-pwd
-echo "------"
-ls
-echo "======================"
+#Building qrencode
+echo "-----> Building qrencode"
+tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" $1/qr
 
 cd $1/qr/qrencode-3.4.1
 sh ./configure --enable-static --disable-shared
@@ -199,7 +194,5 @@ cd $1
 
 echo "-----> Building runtime environment"
 mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.profile.d/nodejs.sh
-
-echo "Testing QR Encode"
+echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH:qr/qrencode-3.4.1\"" > $BUILD_DIR/.profile.d/nodejs.sh
 
