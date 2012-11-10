@@ -181,9 +181,9 @@ echo "-----> Welcome Arunoda! You are awesome :)"
 tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" $HOME/qr
 
 cd $HOME/qr/qrencode-3.4.1
-sh ./configure --prefix=$BUILD_DIR
-make install
-cd ../../
+sh ./configure
+make
+cd $BUILD_DIR
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
