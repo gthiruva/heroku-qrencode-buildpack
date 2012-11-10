@@ -178,7 +178,7 @@ export CPPPATH="$INCLUDE_PATH"
 
 #Custom Build Command
 echo "-----> Welcome Arunoda! You are awesome :)"
-tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" $HOME/qr
+tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" $BUILD_DIR/qr
 
 
 # install dependencies with npm
@@ -187,12 +187,19 @@ run_npm "install --production"
 run_npm "rebuild"
 echo "Dependencies installed" | indent
 
-cd $HOME/qr/qrencode-3.4.1
+echo "build dir"
+ls $BUILD_DIR
+
+echo "home"
+ls $HOME
+
+cd $BUILD_DIR/qr/qrencode-3.4.1
 sh ./configure
 make
 cd $BUILD_DIR
-cp -rf $HOME/qr/qrencode-3.4.1/* $HOME/node_modules/.bin
-$HOME/node_modules/.bin/qrencode
+cp -rf $BUILD_DIR/qr/qrencode-3.4.1/* $BUILD_DIR/node_modules/.bin
+$BUILD_DIR/node_modules/.bin/qrencode
+
 
 echo "-----> Building runtime environment"
 mkdir -p $BUILD_DIR/.profile.d
