@@ -179,6 +179,8 @@ export CPPPATH="$INCLUDE_PATH"
 #Custom Build Command
 echo "-----> Welcome Arunoda! You are awesome :)"
 tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.1.tar.gz" "tmpqr"
+ls
+pwd
 cd tmpqr
 ./configure
 make
