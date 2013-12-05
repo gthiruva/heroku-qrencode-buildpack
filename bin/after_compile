@@ -1,3 +1,12 @@
 export LD_RUN_PATH="/app/vendor/qrencode/lib:$LD_RUN_PATH"
 export LD_LIBRARY_PATH="/app/vendor/qrencode/lib:$LD_LIBRARY_PATH"
 export PKG_CONFIG_PATH="/app/vendor/qrencode/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+echo "-----> /app/vendor contents:"
+ls -a /app/vendor
+
+echo "-----> /app/vendor/qrencode/lib contents:"
+ls -a /app/vendor/qrencode/lib
+
+echo "-----> /app/vendor/opencv/lib contents:"
+ls -a /app/vendor/opencv/lib
