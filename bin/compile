@@ -6,6 +6,12 @@ set -e
 
 # debug
 # set -x
+echo "-----> We are in '$PWD' with contents:"
+ls -a
+echo "-----> Present PATH's:"
+echo "PATH: '$PATH'"
+echo "LD_LIBRARY_PATH: '$LD_LIBRARY_PATH'"
+echo "PKG_CONFIG_PATH: '$PKG_CONFIG_PATH'"
 
 # clean up leaking environment
 unset GIT_DIR
