@@ -1,1 +1,1 @@
-export PKG_CONFIG_PATH="/app/vendor/qrdecode/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="/app/vendor/qrencode/lib/pkgconfig:$PKG_CONFIG_PATH"

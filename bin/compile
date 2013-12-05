@@ -27,7 +27,7 @@ function tar_download() {
 }
 
 #Building qrencode
-echo "-----> Building qrencode"
+echo "-----> Building qrencode ... BUILD_DIR: $BUILD_DIR // CACHE_DIR: $CACHE_DIR"
 tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.3.tar.gz" $BUILD_DIR/qr
 
 cd $BUILD_DIR/qr/qrencode-3.4.3
