@@ -4,5 +4,7 @@
 cat <<EOF
 ---
 config_vars:
-  PATH: qr/qrencode-3.4.1:bin:node_modules/.bin:/usr/local/bin:/usr/bin:/bin
+  PATH: qr/qrencode-3.4.1:bin:/usr/local/bin:/usr/bin:/bin
+  LD_LIBRARY_PATH: /app/vendor/qrencode/lib:$LD_LIBRARY_PATH
+  PKG_CONFIG_PATH: /app/vendor/qrencode/lib/pkgconfig:$PKG_CONFIG_PATH
 EOF
