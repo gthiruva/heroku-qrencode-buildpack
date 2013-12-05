@@ -11,8 +11,14 @@ set -e
 unset GIT_DIR
 
 # config
-S3_BUCKET="heroku-buildpack-nodejs"
 export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:/opt/local/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+
+if [[ "Darwin" == "$(uname)" ]]
+then
+    VENDORED_QRENCODE="$HOME/Code/heroku-qrencode-buildpack/vendor/qrencode" # Just for my local laptop testing
+else
+    VENDORED_QRENCODE="/app/vendor/qrencode"
+fi
 
 # parse and derive params
 BUILD_DIR=$1
@@ -27,14 +33,17 @@ function tar_download() {
 }
 
 #Building qrencode
-echo "-----> Building qrencode ... BUILD_DIR: $BUILD_DIR // CACHE_DIR: $CACHE_DIR"
+echo "-----> Building qrencode ... BUILD_DIR: $BUILD_DIR // CACHE_DIR: $CACHE_DIR // PWD: $PWD"
 tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.3.tar.gz" $BUILD_DIR/qr
 
 cd $BUILD_DIR/qr/qrencode-3.4.3
-sh ./configure --enable-static --disable-shared
+sh ./configure --enable-static --disable-shared --prefix=$VENDORED_QRENCODE
 make
+make install
 cd ../..
 
 echo "-----> Building runtime environment"
 mkdir -p .profile.d
-echo "export PATH=\"$PWD/qr/qrencode-3.4.3:$PWD/bin:\$PATH\"" > .profile.d/qrencode.sh
+echo "export PATH=\"\$HOME/vendor/qrencode/bin:\$PATH\"" > .profile.d/qrencode.sh
+echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_LIBRARY_PATH\"" > $BUILD_DIR/.profile.d/qrencode.sh
+echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/qrencode/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> $BUILD_DIR/.profile.d/qrencode.sh
