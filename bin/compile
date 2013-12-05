@@ -45,5 +45,5 @@ cd ../..
 echo "-----> Building runtime environment"
 mkdir -p .profile.d
 echo "export PATH=\"\$HOME/vendor/qrencode/bin:\$PATH\"" > .profile.d/qrencode.sh
-echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_LIBRARY_PATH\"" > $BUILD_DIR/.profile.d/qrencode.sh
-echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/qrencode/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> $BUILD_DIR/.profile.d/qrencode.sh
+echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_LIBRARY_PATH\"" > .profile.d/qrencode.sh
+echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/qrencode/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> .profile.d/qrencode.sh
