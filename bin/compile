@@ -14,6 +14,7 @@ export LD_RUN_PATH="/usr/local/lib:/usr/lib:/lib:$LD_RUN_PATH"
 export LD_LIBRARY_PATH="$LD_RUN_PATH"
 export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:/lib/pkgconfig:$PKG_CONFIG_PATH"
 echo "PATH: '$PATH'"
+echo "LD_RUN_PATH: '$LD_RUN_PATH'"
 echo "LD_LIBRARY_PATH: '$LD_LIBRARY_PATH'"
 echo "PKG_CONFIG_PATH: '$PKG_CONFIG_PATH'"
 
@@ -22,7 +23,7 @@ echo "PKG_CONFIG_PATH: '$PKG_CONFIG_PATH'"
 unset GIT_DIR
 
 # config
-export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:/opt/local/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/opt/local/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 if [[ "Darwin" == "$(uname)" ]]
 then
