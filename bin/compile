@@ -4,26 +4,25 @@
 # fail fast
 set -e
 
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+
 # debug
 # set -x
-echo "-----> We are in '$PWD' with contents:"
+echo "-----> We are building libpixman and lippoppler in '$PWD' with contents:"
 ls -a
 echo "-----> Present PATH's:"
-export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
-export LD_RUN_PATH="/usr/local/lib:/usr/lib:/lib:$LD_RUN_PATH"
-export LD_LIBRARY_PATH="$LD_RUN_PATH"
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:/lib/pkgconfig:$PKG_CONFIG_PATH"
+echo "HOME: '$HOME'"
+echo "BUILD_DIR: '$BUILD_DIR'"
+echo "CACHE_DIR: '$CACHE_DIR'"
 echo "PATH: '$PATH'"
 echo "LD_RUN_PATH: '$LD_RUN_PATH'"
 echo "LD_LIBRARY_PATH: '$LD_LIBRARY_PATH'"
 echo "PKG_CONFIG_PATH: '$PKG_CONFIG_PATH'"
 
-
 # clean up leaking environment
 unset GIT_DIR
-
-# config
-export PKG_CONFIG_PATH="/usr/lib64/pkgconfig:/opt/local/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 if [[ "Darwin" == "$(uname)" ]]
 then
@@ -32,31 +31,22 @@ else
     VENDORED_QRENCODE="/app/vendor/qrencode"
 fi
 
-# parse and derive params
-BUILD_DIR=$1
-CACHE_DIR=$2
-
-function tar_download() {
-  url="$1"
-  location="$2"
-
-  mkdir -p $location
-  curl $url -s -o - | tar xzf - -C $location
-}
-
 #Building qrencode
 echo "-----> Building qrencode ... BUILD_DIR: $BUILD_DIR // CACHE_DIR: $CACHE_DIR // PWD: $PWD"
-tar_download "http://fukuchi.org/works/qrencode/qrencode-3.4.3.tar.gz" $BUILD_DIR/qr
-
-cd $BUILD_DIR/qr/qrencode-3.4.3
+cd $BUILD_DIR
+curl -OL 'http://fukuchi.org/works/qrencode/qrencode-3.4.3.tar.gz'
+tar xzf qrencode-3.4.3.tar.gz
+cd qrencode-3.4.3
 CFLAGS='-fPIC -Wall -g -O2' CXXFLAGS='-fPIC -Wall -g -O2' png_CFLAGS='-fPIC -Wall -g -O2' ./configure --with-pic --enable-static --disable-shared --prefix=$VENDORED_QRENCODE
 make -j5
 make install
-cd ../..
 
 echo "-----> Building runtime environment"
+cd /app
 mkdir -p .profile.d
-echo "export PATH=\"\$HOME/vendor/qrencode/bin:\$PATH\"" > .profile.d/qrencode.sh
-echo "export LD_RUN_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_RUN_PATH\"" > .profile.d/qrencode.sh
-echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_LIBRARY_PATH\"" > .profile.d/qrencode.sh
-echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/qrencode/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> .profile.d/qrencode.sh
+echo "export VENDORED_QRENCODE=\"$VENDORED_QRENCODE\"" > .profile.d/libqrencode.sh
+echo "export PATH=\"\$HOME/vendor/qrencode/bin:\$PATH\"" >> .profile.d/libqrencode.sh
+echo "export LD_RUN_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_RUN_PATH\"" >> .profile.d/libqrencode.sh
+echo "export LD_LIBRARY_PATH=\"\$HOME/vendor/qrencode/lib:\$LD_LIBRARY_PATH\"" >> .profile.d/libqrencode.sh
+echo "export PKG_CONFIG_PATH=\"\$HOME/vendor/qrencode/lib/pkgconfig:\$PKG_CONFIG_PATH\"" >> .profile.d/libqrencode.sh
+cat .profile.d/libqrencode.sh
