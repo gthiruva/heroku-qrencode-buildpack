@@ -42,7 +42,7 @@ make -j5
 make install
 
 echo "-----> Building runtime environment"
-cd /app
+cd $BUILD_DIR
 mkdir -p .profile.d
 echo "export VENDORED_QRENCODE=\"$VENDORED_QRENCODE\"" > .profile.d/libqrencode.sh
 echo "export PATH=\"\$HOME/vendor/qrencode/bin:\$PATH\"" >> .profile.d/libqrencode.sh
